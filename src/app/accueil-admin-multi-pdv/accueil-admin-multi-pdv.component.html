@@ -1,0 +1,20 @@
+<app-navbar-top></app-navbar-top>
+<div class="container-fluid" style="margin-top: 4rem">
+  <div class="row">
+    <div class="col-sm-3">
+      <ul class="list-group">
+        <li style="cursor: pointer" class="list-group-item  active" [routerLink]="['/accueiladmmpdv', 'dashboard']"><i class="fa fa-dashboard fa-fw"></i> Tableaux de bord</li>
+        <li style="cursor: pointer" class="list-group-item" [routerLink]="['/accueiladmmpdv', 'monitoring']"><i class="fa fa-bar-chart" aria-hidden="true"></i> Monitoring des deposits</li>
+        <li style="cursor: pointer" class="list-group-item" [routerLink]="['/accueiladmmpdv', 'statusreclamation']"><i class="fa fa-comments-o" aria-hidden="true"></i> Statuts Réclamations</li>
+        <li style="cursor: pointer" class="list-group-item" *ngIf="autoriserpourcettefonctionnalie"  [routerLink]="['/accueiladmmpdv', 'crediterccc']"><i class="fa fa-credit-card-alt" aria-hidden="true"></i> Acrédité compte CC</li>
+        <li style="cursor: pointer" class="list-group-item" [routerLink]="['/accueiladmmpdv', 'demanderetrait']"><i class="fa fa-money" aria-hidden="true"></i> Demande de Retrait</li>
+        <li style="cursor: pointer" class="list-group-item" [routerLink]="['/accueiladmmpdv', 'suivipoints']"><i class="fa fa-binoculars" aria-hidden="true"></i> Suivi points</li>
+        <li style="cursor: pointer" class="list-group-item" *ngIf="autoriserpourcettefonctionnalie" [routerLink]="['/accueiladmmpdv', 'updatecaution']"><i class="fa fa-refresh" aria-hidden="true"></i> Mise à jour cautions</li>
+        <li style="cursor: pointer" class="list-group-item" [routerLink]="['/accueiladmmpdv', 'zoning']"><i class="fa fa-globe" aria-hidden="true"></i> Zoning</li>
+      </ul>
+    </div>
+    <div class="col-sm-9" style="padding-top: 3rem ;">
+      <!--<router-outlet></router-outlet>-->
+    </div>
+  </div>
+</div>

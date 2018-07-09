@@ -1,0 +1,20 @@
+<nav class="navbar navbar-inverse fixed-top bg-inverse navbar-toggleable-md">
+
+  <a class="navbar-brand" href="javascript:void(0)">SENTOOL</a>
+  <span style="width: 45rem"><marquee><h3 style="color : black; text-transform: capitalize;">{{message}}</h3></marquee></span>
+
+  <ul class="nav navbar-top-links navbar-right">
+    <li *ngIf="autorisedUser==1" class="dropdown" style="cursor: pointer;"> <a (click)="updateCaution()"> <i class="fa fa-refresh"></i> <b>Solde Déposit  : {{solde}} Fcfa</b> </a> </li>
+
+    <li class="dropdown">
+      <a class="dropdown-toggle" id="currentUser" (click)="deconnexion()"><i class="fa fa-user-circle" aria-hidden="true"></i>
+        {{currentUser.username}} - Se déconnecter
+      </a>
+      <ul class="dropdown-menu dropdown-user">
+        <li class="divider"></li>
+        <li><a class="btn" id="disconnect-btn" (click)="deconnexion()" ><i class="fa fa-sign-out fa-fw"></i> Se déconnecter</a></li>
+      </ul>
+    </li>
+  </ul>
+
+</nav>

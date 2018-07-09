@@ -1,0 +1,153 @@
+<div class="container-fluid">
+  <nav class="nav row"  style="font-family:'caviar dreams bold'">
+    <img src="assets/head.png" style="position: absolute; z-index: -1; width: 100%; height: 50%"/>
+    <div class="col-sm-12 col-md-12 col-xs-12">
+      <form class="form form-inline pull-right" (ngSubmit)="authentificate()" #loginForm="ngForm" *ngIf="phase1">
+        <div class="form-group" style="color: white ;" *ngIf="!this.fakevalues">Login ou Mot de pass invalide! Veuillez reprendre la saisie.</div>
+        <input class="form-group form-control" type="text" [(ngModel)]="this.userName" required autofocus id="userName" name="userName"  placeholder="identifiant"/>
+        <input class="form-group form-control" type="password" [(ngModel)]="this.userPwd" required id="userPwd" name="userPwd" placeholder="password"/>
+        <button class="btn btn-success" [disabled]="!loginForm.valid"><i class="fa fa-check" style="color : white" aria-hidden="true"></i> Valider</button>
+      </form>
+      <form class="form form-inline pull-right" (ngSubmit)="authentificateBySMS()" #loginNextForm="ngForm" *ngIf="!phase1">
+        <div class="form-group" style="color: red ;" *ngIf="!this.phase2fakevalues">Le code que vous avez saisi est incorrect! Veuillez reprendre la saisie.</div>
+        <input type="text" [(ngModel)]="this.fromSMS" name="fromSMS" id="fromSMS"  class="form-group form-control" placeholder="SMS code" required autofocus>
+        <input class="btn btn-success" value="Se connecter" type="button" type="submit" [disabled]="!loginNextForm.form.valid"  />
+      </form>
+    </div>
+    <div class="col-sm-12 col-md-12 col-xs-12" style="margin:0 auto; text-align: center; color: white; margin-top: 1rem">
+      <h1 style="font-size: xx-large">SENTOOL</h1>
+      <h4>
+        <a style="color: white; cursor: pointer;" (click)="diagnostiquer()">REINITIALISER <i class="fa fa-refresh" aria-hidden="true"></i> </a>
+      </h4>
+      <div class="col-sm-12 col-md-12 col-xs-12" style="position: absolute">
+        <h2 class="col-sm-12" style="color: white; text-align: center;">Souscrivez à la plateforme Sentool</h2>
+        <div class="mafleche col-sm-12" style="text-align:center">
+          <i class="fa fa-5x fa-arrow-down" style="color: #36a9e0 !important;"></i>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid" style="margin-top: 10.5rem">
+    <div class="col-sm-9 col-xs-10" style="margin:0 auto; text-align: center">
+      <form #suscriptionForm="ngForm" (ngSubmit)="inscrire()">
+        <div class="form-group row">
+          <div class="col-sm-12 col-xs-12" >
+            <span *ngIf="this.errorSouscription" style="color:red">Les informations fournies sont érronés</span>
+            <span *ngIf="usedLogin==true" style="color:red">Login déjà utilisé. Veuillez en choisir un nouveau.</span>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="codevalidation" style="color: #36a9e0" class="col-sm-2 col-form-label">Code</label>
+          <div class="col-sm-10">
+            <input style=" border: 1px solid #36a9e0; border-radius: 2rem 0rem 2rem 2rem;" type="text" id="codevalidation" required [(ngModel)]="codevalidation" name="codevalidation" placeholder="code de validation" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-6">
+            <div class="row">
+              <label for="prenom" style="color: #36a9e0" class="col-sm-3 col-form-label">Prénom</label>
+              <div class="col-sm-9">
+                <input style=" border: 1px solid #36a9e0; border-radius: 2rem 0rem 2rem 2rem;" type="text" id="prenom" required [(ngModel)]="prenom" name="prenom" placeholder="prenom" class="form-control" />
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="row">
+              <label for="nom" style="color: #36a9e0" class="col-sm-3 col-form-label">Nom</label>
+              <div class="col-sm-9">
+                <input style="border: 1px solid #36a9e0;border-radius: 2rem 0rem 2rem 2rem;" type="text" id="nom" [(ngModel)]="nom" required name="nom" placeholder="nom" class="form-control"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-6">
+            <div class="row">
+              <label for="email" style="color: #36a9e0" class="col-sm-3 col-form-label">Email</label>
+              <div class="col-sm-9">
+                <input style="border: 1px solid #36a9e0; border-radius: 2rem 0rem 2rem 2rem;" type="email" [(ngModel)]="email" id="email" required  name="email" placeholder="email" class="form-control"  />
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="row">
+              <label for="tel" style="color: #36a9e0" class="col-sm-3 col-form-label">Téléphone</label>
+              <div class="col-sm-9">
+                <input style=" border: 1px solid #36a9e0;border-radius: 2rem 0rem 2rem 2rem;" type="tel" [(ngModel)]="telephone" id="tel" required name="tel" placeholder="telephone" class="form-control" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row" style="color: #36a9e0; margin: 0 auto; text-align: left">
+          <div class="form-group col-sm-6">
+            <label for="entreprise">Nom Entreprise</label>
+            <input type="text" style="border: 1px solid #36a9e0;border-radius: 2rem 0rem 2rem 2rem;"  class="form-control" id="entreprise" name="entreprise" [(ngModel)]="nometps" required placeholder="nom entreprise" />
+          </div>
+          <div class="form-group col-sm-6">
+            <label for="boutique">Boutique en ligne</label>
+            <input type="text" style="border: 1px solid #36a9e0;border-radius: 2rem 0rem 2rem 2rem;" [(ngModel)]="nomshop" id="boutique" name="boutique" placeholder="Boutique en ligne(facultatif)" class="form-control"  />
+          </div>
+        </div>
+        <div class="form-group row" style="color: #36a9e0" *ngIf="!iszones && !issouszones">
+          <label for="regionnewcaisse" style="color: #36a9e0" class="col-sm-2 col-form-label">Région</label>
+          <div class="col-sm-10">
+            <select style="border: 1px solid #36a9e0; border-radius: 2rem 0rem 2rem 2rem;" class="form-control" id="regionnewcaisse" name="regionnewcaisse" required [(ngModel)]="region" (change)="selectRegionNewCaissier()">
+              <option selected>Choisir région</option>
+              <option *ngFor="let region of regions">{{region.nom}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" style="color: #36a9e0" *ngIf="iszones && !issouszones">
+          <label for="zonenewcaisse" style="color: #36a9e0" class="col-sm-2 col-form-label">Zones</label>
+          <div class="col-sm-10">
+            <select style="border: 1px solid #36a9e0; border-radius: 2rem 0rem 2rem 2rem;" class="form-control" id="zonenewcaisse" name="zonenewcaisse" required [(ngModel)]="zone" (change)="selectZoneNewCaissier()">
+              <option>Choisir zone</option>
+              <option  *ngFor="let zone of zones">{{zone.nom}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" style="color: #36a9e0" *ngIf="issouszones && !isadresse &&zone!='Choisir zone'">
+          <label for="souszonenewcaisse" style="color: #36a9e0" class="col-sm-4 col-form-label">Sous zones</label>
+          <div class="col-sm-8">
+            <select style="border: 1px solid #36a9e0; border-radius: 2rem 0rem 2rem 2rem;" class="form-control" id="souszonenewcaisse" name="souszonenewcaisse" required [(ngModel)]="souszone" (change)="selectsousZoneNewCaissier()">
+              <option>Choisir sous zone</option>
+              <option  *ngFor="let souszone of souszones">{{souszone.nom}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row" style="color: #36a9e0" *ngIf="isadresse">
+          <label for="adressenewcaisse" style="color: #36a9e0" class="col-sm-2 col-form-label">Adresse</label>
+          <div class="col-sm-10">
+            <textarea class="form-control" style="border: 1px solid #36a9e0; border-radius: 2rem 0rem 2rem 2rem;" id="adressenewcaisse" type="text" name="adressenewcaisse" required [(ngModel)]="adresse" placeholder=".....Adresse exacte" rows="2"></textarea>
+          </div>
+        </div>
+        <div class="form-group row" style="color: #36a9e0">
+          <div class="col-sm-12">
+            <button class="btn btn-success" style="border-radius: 2rem ; background-color: orange ; color : white ; border-style: hidden ;" [disabled]="!suscriptionForm .valid"><i class="fa fa-check" aria-hidden="true"></i> Valider</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<div bsModal #viewMore="bs-modal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" style="background-color: #f39200; color: white;">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: center ;">
+        <b>Le compte a été  créé avec succès. Vous allez recevoir un SMS contenant vos paramètres d'accès.</b>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-loader [loader]="loading"></app-loader>
+
